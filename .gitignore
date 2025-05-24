@@ -1,0 +1,11 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Odoo logs
+*.log
+
+# IDE folders
+.vscode/
+.idea/
