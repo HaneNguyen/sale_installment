@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="email_template_installment_contract_editable" model="mail.template">
+      <field name="name">Hợp đồng trả góp - Mẫu tùy chỉnh</field>
+      <field name="model_id" ref="model_sale_installment_profile"/>
+      <field name="subject">Hợp đồng trả góp - {{ object.name }}</field>
+      <field name="email_from">{{ user.email_formatted }}</field>
+      <field name="partner_to">{{ object.partner_id.id }}</field>
+      <field name="email_to">{{ object.partner_id.email }}</field>
+      <field name="reply_to">{{ user.email_formatted }}</field>
+      <field name="body_html" type="html">
+        <div style="margin: 0px; padding: 0px;">
+          <p style="margin: 0px; padding: 0px; font-size: 13px;">
+            Kính gửi <t t-out="object.partner_id.name or ''"/>,
+          </p>
+          <div t-field="object.email_body" style="margin: 0px; padding: 0px; font-size: 13px; margin-top: 16px;"/>
+          <p style="margin: 0px; padding: 0px; font-size: 13px; margin-top: 16px;">
+            Trân trọng,
+          </p>
+          <p style="margin: 0px; padding: 0px; font-size: 13px; margin-top: 16px;">
+            <t t-out="user.name or ''"/>
+          </p>
+        </div>
+      </field>
+      <field name="lang">{{ object.partner_id.lang }}</field>
+      <field name="auto_delete" eval="True"/>
+      <field name="use_default_to" eval="True"/>
+    </record>
+  </data>
+</odoo>

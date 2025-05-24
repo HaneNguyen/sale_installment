@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="sale_order_form_installment" model="ir.ui.view">
+      <field name="name">sale.order.form.installment</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form/sheet/notebook" position="inside">
+          <page string="Installment Info" name="installment_info">
+            <group>
+              <group>
+                <field name="installment_profile_id"/>
+                <field name="amount_paid"/>
+                <field name="installment_months"/>
+              </group>
+              <group>
+                <field name="installment_day"/>
+                <field name="late_fee_rate"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

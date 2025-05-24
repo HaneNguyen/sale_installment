@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="report_installment_contract">
+      <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+          <t t-call="web.external_layout">
+            <div class="page">
+              <div class="text-center mb16">
+                <h3>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h3>
+                <h4>Độc lập - Tự do - Hạnh phúc</h4>
+                <hr/>
+              </div>
+              <h2 class="text-center">HỢP ĐỒNG MUA BÁN HÀNG HÓA TRẢ GÓP</h2>
+              <p>Số: <span t-field="doc.name"/>/HĐMB</p>
+              <p>- Căn cứ Bộ luật Dân sự 2015;</p>
+              <p>- Căn cứ Luật Thương mại 2005;</p>
+              <p>- Căn cứ theo nhu cầu của hai bên;</p>
+              <p>Hôm nay, ngày <span t-field="doc.sale_order_id.date_order" t-options="{'format':'dd/MM/yyyy'}"/>, tại <span t-field="doc.seller_id.street"/>. Chúng tôi gồm có:</p>
+              <p><strong>BÊN A (BÊN BÁN):</strong></p>
+              <p>- Tên: <span t-field="doc.seller_id.name"/>;</p>
+              <p>- MST: <span t-field="doc.seller_id.vat"/>;</p>
+              <p>- Địa chỉ: <span t-field="doc.seller_id.street"/>;</p>
+              <p><strong>BÊN B (BÊN MUA):</strong></p>
+              <p>- Tên: <span t-field="doc.partner_id.name"/>;</p>
+              <p>- MST: <span t-field="doc.mst"/>;</p>
+              <p>- Địa chỉ: <span t-field="doc.address"/>;</p>
+              <p><strong>Điều 1:</strong> Bên A đồng ý bán trả góp cho Bên B mặt hàng: <span t-field="doc.sale_order_id.order_line[0].product_id.name"/>, số lượng: <span t-field="doc.sale_order_id.order_line[0].product_uom_qty"/>, chất lượng: theo thỏa thuận.</p>
+              <p>Giá: <span t-field="doc.amount_total"/> VNĐ.</p>
+              <p><strong>Điều 2:</strong> Bên B trả trước cho Bên A số tiền: <span t-field="doc.amount_paid" default="0"/> VNĐ vào ngày nhận hàng; số tiền còn lại: <span t-esc="doc.amount_total - (doc.amount_paid or 0)"/> VNĐ. Bên B sẽ thanh toán trong <span t-field="doc.installment_months" default="1"/> tháng, mỗi tháng trả <span t-esc="(doc.amount_total - (doc.amount_paid or 0)) / (doc.installment_months or 1)"/> VNĐ vào ngày <span t-field="doc.installment_day" default="1"/> hàng tháng. Nếu chậm thanh toán, lãi suất phạt là <span t-field="doc.late_fee_rate" default="0"/>%/tháng.</p>
+              <p><strong>Điều 3:</strong> Mọi tranh chấp sẽ được giải quyết bằng hòa giải, thương lượng; nếu không thành, đưa ra Toà án có thẩm quyền.</p>
+              <p>Hợp đồng lập thành 02 bản, mỗi bên giữ 01 bản.</p>
+              <div class="mt32 row">
+                <div class="col-6 text-center">
+                  <p><strong>BÊN A</strong></p>
+                  <p>(Ký, ghi rõ họ tên)</p>
+                </div>
+                <div class="col-6 text-center">
+                  <p><strong>BÊN B</strong></p>
+                  <p>(Ký, ghi rõ họ tên)</p>
+                </div>
+              </div>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+    <record id="report_installment_contract_action" model="ir.actions.report">
+      <field name="name">Installment Contract</field>
+      <field name="model">sale.installment.profile</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">sale_installment.report_installment_contract</field>
+      <field name="report_file">sale_installment.report_installment_contract</field>
+      <field name="print_report_name">'Installment_Contract_' + object.name</field>
+      <field name="binding_model_id" ref="model_sale_installment_profile"/>
+    </record>
+  </data>
+</odoo>
